@@ -87,9 +87,19 @@ st.markdown("""
         color: #ffffff !important;
     }
     
-    /* Code block background */
-    code {
-        color: #e6edf3 !important;
+    /* Code block styling (Black text on Light background for visibility) */
+    code, pre, [data-testid="stCodeBlock"] code {
+        background-color: #f0f2f6 !important;
+        color: #000000 !important;
+        -webkit-text-fill-color: #000000 !important;
+        border-radius: 5px !important;
+        padding: 10px !important;
+        font-weight: 500 !important;
+    }
+
+    /* Target the syntax highlighting tokens to also be dark/visible */
+    .token {
+        color: #000000 !important;
     }
 
     /* Final Summary Box */
