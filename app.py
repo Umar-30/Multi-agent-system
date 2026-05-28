@@ -164,25 +164,29 @@ def main():
         with st.chat_message("assistant"):
             try:
                 # --- Step 1: Research ---
-                with st.status("🔍 **Research Agent** is exploring...", expanded=False) as status:
+                with st.status("🔍 **Research Agent** is exploring...", expanded=True) as status:
                     research = coordinator.research_agent.think(prompt)
-                    st.markdown("### 🔍 Research Results")
-                    st.write(research)
-                    status.update(label="✅ Research Complete", state="complete")
+                    status.update(label="✅ Research Complete", state="complete", expanded=False)
+                
+                # Show research results outside status
+                st.markdown("### 🔍 Research Results")
+                st.markdown(research)
 
                 # --- Step 2: Coding ---
-                with st.status("💻 **Coding Agent** is building...", expanded=False) as status:
+                with st.status("💻 **Coding Agent** is building...", expanded=True) as status:
                     coding_prompt = f"Based on this research:\n{research}"
                     code = coordinator.coding_agent.think(coding_prompt)
-                    st.markdown("### 💻 Generated Solution")
-                    st.code(code, language='python')
-                    status.update(label="✅ Code Generated", state="complete")
+                    status.update(label="✅ Code Generated", state="complete", expanded=False)
+                
+                # Show code results outside status
+                st.markdown("### 💻 Generated Solution")
+                st.code(code, language='python')
 
                 # --- Step 3: Summary ---
-                with st.status("📝 **Summarizer Agent** is finishing...", expanded=False) as status:
+                with st.status("📝 **Summarizer Agent** is finishing...", expanded=True) as status:
                     summary_prompt = f"Summarize the following research and code:\n\nRESEARCH:\n{research}\n\nCODE:\n{code}"
                     summary = coordinator.summarizer_agent.think(summary_prompt)
-                    status.update(label="✅ Task Finished", state="complete")
+                    status.update(label="✅ Task Finished", state="complete", expanded=False)
 
                 # --- Final Result Display ---
                 st.markdown("### 🏁 Final Summary")
